@@ -1,20 +1,22 @@
 //list with ALL CARDS
 
-const icons = ["fa fa-diamond",
-    "fa fa-diamond",
-    "fa fa-paper-plane-o",
-    "fa fa-paper-plane-o",
-    "fa fa-anchor",
-    "fa fa-anchor", "fa fa-bolt",
-    "fa fa-bolt",
-    "fa fa-cube",
-    "fa fa-cube",
-    "fa fa-leaf",
-    "fa fa-leaf",
-    "fa fa-bicycle",
-    "fa fa-bicycle",
-    "fa fa-bomb",
-    "fa fa-bomb"
+const icons = [
+    { type: "fa fa-diamond", id: 0 },
+    { type: "fa fa-diamond", id: 1 },
+    { type: "fa fa-paper-plane-o", id: 2 },
+    { type: "fa fa-paper-plane-o", id: 3 },
+    { type: "fa fa-anchor", id: 4 },
+    { type: "fa fa-anchor", id: 5 },
+    { type: "fa fa-bolt", id: 6 },
+    { type: "fa fa-bolt", id: 7 },
+    { type: "fa fa-cube", id: 8 },
+    { type: "fa fa-cube", id: 9 },
+    { type: "fa fa-leaf", id: 10 },
+    { type: "fa fa-leaf", id: 11 },
+    { type: "fa fa-bicycle", id: 12 },
+    { type: "fa fa-bicycle", id: 13 },
+    { type: "fa fa-bomb", id: 14 },
+    { type: "fa fa-bomb", id: 15 }
 ];
 
 const game = document.querySelector(".deck");
@@ -33,15 +35,16 @@ let moves = 0;
 
 //starting NEW GAME
 function newGame() {
+    //shuffle(icons);
     for (let i = 0; i < icons.length; i++) {
         const card = document.createElement("li");
         card.classList.add("card");
-        card.innerHTML = `<i class="${icons[i]}"></i>`;
+        card.innerHTML = `<i class="${icons[i].type}"></i>`;
+        card.id = icons[i].id;
         game.appendChild(card);
         //add click event to each card
         click(card);
     }
-
 }
 
 
@@ -82,8 +85,8 @@ function click(card) {
 //comparing two cards for MATCH
 
 function compare(currentCard, previousCard) {
-
-    if (currentCard.innerHTML === previousCard.innerHTML) {
+    debugger;
+    if (currentCard.innerHTML === previousCard.innerHTML && currentCard.id !== previousCard.id) {
         //matched
         currentCard.classList.add("match");
         previousCard.classList.add("match");
@@ -125,9 +128,9 @@ function move() {
 starsContainer.innerHTML = star + star + star;
 
 function rating() {
-    if (moves < 10) {
+    if (moves < 15) {
         starsContainer.innerHTML = star + star + star;
-    } else if (moves < 15) {
+    } else if (moves < 29) {
         starsContainer.innerHTML = star + star;
     } else {
         starsContainer.innerHTML = star;
@@ -183,7 +186,7 @@ function countTimer() {
 
 //stops timer
 function stopTimer() {
-    clearInterval(timer);
+    clearInterval(interval);
 }
 
 // game over + opening of the modal
@@ -226,8 +229,7 @@ close.addEventListener("click", function() {
     starsContainer.innerHTML = star + star + star;
 
     //reset the timer
-
-
+    interval = setInterval(countTimer, 1000);
 });
 
 //SHUFFLE the cards
